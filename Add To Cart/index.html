@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="header">
+        <img src="cart-64.png" alt="">
+        <span></span>
+        <span></span>
+    </div>
+
+<div class="container">
+    <div class="each">
+        <!-- <img src="71WcMX4a1IL.webp"> -->
+        <div class="overlay"></div>
+        <div class="product_description">
+            <h1>20% off on tank tops</h1>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque, nobis corporis?</p>
+            <div><span>$43</span></div>
+            <button class="shop id1">Shop Now</button>
+        </div>
+    </div>
+    <div class="each">
+        <!-- <img src="maksym.jpg"> -->
+        <div class="overlay"></div>
+        <div class="product_description">
+            <h1>Latest eyewear for you</h1>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque, nobis corporis?</p>
+            <div><span>$433</span></div>
+            <button class="shop id2">Shop Now</button>
+        </div>
+    </div>
+    <div class="each">
+        <!-- <img src="black.jpg"> -->
+        <div class="overlay"></div>
+        <div class="product_description">
+            <h1>Let's lorem suit up!</h1>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque, nobis corporis?</p>
+            <div><span>$102</span></div>
+            <button class="shop id3">Shop Now</button>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Do this after running the script code that is the console.log for the prodcut property object-->
+
+<div class="overall">
+    <div class="covering"></div>
+    <div class="cart_information">
+        <div class="exit"><img src="exit.png" alt="" class="exit_btn"></div>
+        <div class="cart_details"></div>
+    </div>
+</div>
+
+
+<script>
+
+const cartDetails = document.querySelector(".cart_details");
+const shop = document.querySelectorAll(".shop");
+shop.forEach(btn => {
+    btn.addEventListener("click", e => {
+        e.preventDefault();
+        let p1 = e.currentTarget.parentElement;
+        let p2 = p1.parentElement;
+        let notify = document.createElement("div");
+        let imgspan = "<img src='check-block.png'><span>Added To Cart!</span>";
+        notify.innerHTML = imgspan;
+        p1.appendChild(notify)
+        let button = p1.querySelector("button");
+        p1.insertBefore(notify, button);
+
+        //add class
+        notify.classList.add("notify");
+
+        button.setAttribute("disabled", "disabled");
+
+        setTimeout(() => {
+            button.removeAttribute("disabled");
+            p1.removeChild(notify)
+        }, 1000);
+
+        
+        let image = window.getComputedStyle(p2).backgroundImage;
+        let sliceImage = image.slice(5, -2);
+
+        let productProperty = {
+            name: p1.querySelector("h1").textContent,
+            description: p1.querySelector("p").textContent,
+            image: sliceImage,
+            price: p1.querySelector("div").textContent,
+        };
+
+        
+        let div = document.createElement("div");
+        div.innerHTML = `<img src="${productProperty.image}"> 
+        <div>
+        <h1>${productProperty.name}</h1>
+        <p>${productProperty.description}</p>   
+        <span>${productProperty.price}</span>
+        <button class="buy">Buy</button>
+        <button class="remove">Remove</button> 
+        </div>`;
+        cartDetails.appendChild(div);
+
+        //do this when you want to create the result of the add to cart
+        const header = document.querySelector(".header");
+        let span = header.querySelector("span");
+        console.log(cartDetails)
+        if(cartDetails.innerHTML === "") {
+            span.style.display = "none";
+        }else {
+            span.style.display = "block";
+        }
+
+    })
+})
+
+const overall = document.querySelector(".overall");
+const header = document.querySelector(".header");
+let img = header.querySelector("img");
+img.addEventListener("click", e => {
+    overall.style.display = "block";
+
+    const remove = document.querySelectorAll(".remove");
+    remove.forEach(del => {
+    del.addEventListener("click", e => {
+       e.currentTarget.parentNode.parentNode.remove();
+    })
+})
+})
+
+const exitBtn = document.querySelector(".exit_btn");
+exitBtn.addEventListener("click", e => {
+    overall.style.display = "none";
+})
+
+
+
+
+
+</script>
+
+</body>
+</html>
